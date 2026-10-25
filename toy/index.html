@@ -29,6 +29,14 @@
   #hud .name { font-size: clamp(11px, 2.8vw, 18px); font-weight: 800; text-shadow: 0 1px 2px #000; }
   #clock { font-size: clamp(16px, 4.4vw, 34px); font-weight: 900; min-width: 2.2em; text-align: center; text-shadow: 0 1px 3px #000; line-height: 1; }
   #app:not(.fighting) #hud { visibility: hidden; }
+  /* the practice room: who the partner is and what it does, a combo counter, and infinite ki */
+  #drillbar, #drilltip { display: none; }
+  #app.practice #drillbar { display: flex; position: absolute; left: 6px; bottom: 6px; gap: 5px; }
+  #app.practice #drilltip { display: block; position: absolute; left: 0; right: 0; top: 18%; text-align: center; font-size: clamp(11px, 2.8vw, 16px); color: #ffffffcc; text-shadow: 0 1px 3px #000; pointer-events: none; padding: 0 10px; }
+  #drillbar button { font-size: clamp(11px, 2.9vw, 14px); padding: 5px 9px; border-radius: 14px; border: 1px solid #ffffff44; background: #0009; font-weight: 700; }
+  #drillbar button.on { background: #ffe36b; color: #1a1300; border-color: #ffe36b; }
+  #combo { position: absolute; left: 0; right: 0; top: 27%; text-align: center; font-weight: 900; font-size: clamp(16px, 4.6vw, 34px); color: var(--gold); text-shadow: 0 0 10px #000, 0 2px 0 #000; pointer-events: none; opacity: 0; transition: opacity .3s; }
+  #combo.on { opacity: 1; }
   #app.fighting #quit { display: block; }
   /* the buttons: under the picture when the phone is upright, either side of it when it lies down */
   #pad { flex: 1; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 14px calc(14px + env(safe-area-inset-bottom)); touch-action: none; }
@@ -85,7 +93,9 @@
 <div id="app">
   <div id="stage"><canvas id="c" width="1280" height="640"></canvas>
     <div id="hud"><div class="side"><div class="bar"><i class="hp"></i></div><div class="ki"><i></i></div><span class="name"></span></div><b id="clock">60</b><div class="side r"><div class="bar"><i class="hp"></i></div><div class="ki"><i></i></div><span class="name"></span></div></div>
-    <div id="banner"></div><div id="hint">按住 轻拳（J）推回去！</div><button id="quit" aria-label="退出">✕</button></div>
+    <div id="banner"></div><div id="hint">按住 轻拳（J）推回去！</div><button id="quit" aria-label="退出">✕</button>
+    <div id="drilltip"></div><div id="combo"></div>
+    <div id="drillbar"><button data-mode="stand">木桩</button><button data-mode="guard">格挡</button><button data-mode="spar">还手</button><button data-mode="clash">对波</button><button id="inf" class="on">无限气</button></div></div>
   <div id="pad">
     <div class="cluster" id="lpad">
       <div class="row"><button data-b="left">◀</button><button data-b="right">▶</button></div>
@@ -103,6 +113,7 @@
   <h1>AI 武道会</h1>
   <p class="sub">挑一个 AI，亲手跟它写的程序打一局<br>它们在联赛里互相打了 <span id="games">15000</span> 局</p>
   <div id="cards"></div>
+  <button class="wide-btn" id="drill">练习场<small>先熟悉操作：木桩、格挡、还手、对波四种陪练，不计战绩</small></button>
   <button class="wide-btn" id="gauntlet">车轮战：连打 6 家<small id="gauntlet-sub">从最后一名打到冠军，输一局就结束</small></button>
   <div class="links"><button class="wide-btn" id="how">怎么玩</button><button class="wide-btn" id="ranks" hidden>排行榜</button></div>
   <div class="me" id="me"></div>
@@ -130,7 +141,8 @@
     <b>气功波</b> 50 气，蓄 0.5 秒，打中 280<br>
     <b>瞬移</b> 16 气，短暂无敌，能穿到对面身后；按住后退方向是后撤<br>
     <b>对波</b> 两道气功波撞上时，按住 轻拳 推回去<br>
-    每局 60 秒，1500 血。电脑上用键盘：A/D 走位，S 格挡，W 蓄气，J/K/L/I 出招，空格瞬移。
+    每局 60 秒，1500 血。电脑上用键盘：A/D 走位，S 格挡，W 蓄气，J/K/L/I 出招，空格瞬移。<br>
+    手生的话，先去<b>练习场</b>：没有时间限制，打不死，气用不完。
   </div>
   <button class="wide-btn" id="help-ok">开打</button>
 </div>

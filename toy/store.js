@@ -7,7 +7,7 @@ const IN_TOY = /(^|\.)bilibilitoy\.com$/i.test(location.hostname);
 export const BOARD = { streak: 1, champion: 2 };                 // 连胜榜: best run of wins; 冠军挑战榜: wins against the champion
 const SHARED_ID = null;                                          // st_ + 16 characters, from the Toy console once we have one
 const SHARDS = 16;                                               // the shared tally is split over keys: there is no atomic add
-const EP_AIDS = [];                                              // the episode's video (aid) for 三连解锁; empty: unlocked
+const EP_VIDEOS = [{ bvid: 'BV1Z5HV6dEqk' }];                   // 第一集正片: liking, coining and favouriting it opens 车轮战
 const LOCAL = 'wudaohui.s1.me';
 
 const blank = () => ({ vs: {}, streak: 0, best: 0, champ: 0, games: 0 });
@@ -60,10 +60,10 @@ export const store = {
   },
   // 车轮战 is open after liking, coining and favouriting the episode, or following; outside the Toy, and whenever the check fails, it is open
   async gauntletOpen() {
-    if (!this.inToy || !EP_AIDS.length) return true;
+    if (!this.inToy || !EP_VIDEOS.length) return true;
     const rel = await quiet(() => sdk.getAuthorRelation(), null);
     if (rel && (rel.following || rel.is_follow || rel.attribute === 2 || rel.attribute === 6)) return true;
-    const act = await quiet(() => sdk.getVideoUserActions({ aids: EP_AIDS }), null);
+    const act = await quiet(() => sdk.getVideoUserActions({ videos: EP_VIDEOS }), null);
     if (!act) return true;
     const a = (Array.isArray(act) ? act[0] : act.items?.[0] ?? act.list?.[0] ?? act) || {};
     return !!((a.like || a.liked) && (a.coin || a.coined || a.coins) && (a.favorite || a.fav || a.favoured));

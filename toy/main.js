@@ -11,8 +11,10 @@ import { CAST, castOf } from '../anime/fighters.js';
 import { drawStick } from '../anime/stick.js';
 import { pad, bindKeys, bindButtons } from './input.js';
 import { store } from './store.js';
+import { DRILL_RULES, MODES, dummy } from './practice.js';
 
 CAST.human = { name: '你', palette: ['#ffffff', '#ff5d73', '#e0244a'], build: { k: 1, sh: 1, arm: 1, leg: 1 }, hair: 'spiky', extras: [] };   // the player: a seventh look, rose red
+CAST.partner = { name: '陪练', palette: ['#ffffff', '#9fe6ff', '#45a8d3'], build: { k: 1, sh: 1, arm: 1, leg: 1 }, hair: 'spiky', extras: [] };   // the practice partner
 
 const $ = id => document.getElementById(id), ctx = $('c').getContext('2d');
 const root = new URL('..', import.meta.url).href, snd = new FightSound(), sources = new Map();
@@ -47,7 +49,7 @@ function hud(L, fr, tick) {
     e.ki.style.width = `${F[5]}%`; e.ki.style.background = F[5] >= RULES.beam.cost ? '#fff3a0' : '#9fe6ff';
     e.name.textContent = `${L.names[i]}  ${hp}`; e.name.style.color = c;
   });
-  $('clock').textContent = Math.max(0, Math.ceil((RULES.maxTicks - tick) / RULES.fps));
+  $('clock').textContent = L.drill ? '∞' : Math.max(0, Math.ceil((RULES.maxTicks - tick) / RULES.fps));
 }
 
 async function source(bot) {
@@ -64,7 +66,10 @@ async function init() {
   bindButtons($('pad'), () => !!live && !live.done, () => live.m.tick);
   addEventListener('visibilitychange', () => { pad.reset(); if (live) live.acc = 0; });
   layout(); addEventListener('resize', layout);
-  $('quit').onclick = () => { live = null; gauntlet = null; snd.hush(); $('app').classList.remove('fighting'); menu(); };
+  $('quit').onclick = () => { live = null; gauntlet = null; snd.hush(); $('app').classList.remove('fighting', 'practice'); menu(); };
+  $('drill').onclick = () => practice('stand');
+  for (const b of document.querySelectorAll('[data-mode]')) b.onclick = () => live?.drill && setMode(b.dataset.mode);
+  $('inf').onclick = () => { if (live?.drill) { live.drill.inf = !live.drill.inf; $('inf').classList.toggle('on', live.drill.inf); } };
   $('how').onclick = () => show('help'); $('help-ok').onclick = () => show('select');
   $('gauntlet').onclick = async () => { if (!(await store.gauntletOpen())) return; gauntlet = { order: roster.fighters.map(f => f.id).reverse(), i: 0 }; fight(gauntlet.order[0]); };
   $('r-again').onclick = () => fight(last.id); $('r-back').onclick = () => { gauntlet = null; menu(); };
@@ -113,6 +118,38 @@ async function fight(id) {
   last = f; show(null); $('app').classList.add('fighting');
 }
 
+// ---- the practice room: no clock, health refills before anyone falls, ki on tap if wanted; nothing is recorded
+async function practice(mode) {
+  const seed = (Math.random() * 2 ** 32) >>> 0, inf = live?.drill?.inf ?? true;
+  snd.unlock();
+  const m = createMatch({ seed, rules: DRILL_RULES, record: true, cadence: [1, RULES.decideEvery] });
+  pad.reset(); snd.reset(seed);
+  const L = { m, seed, f: { short: '陪练' }, drill: { mode, inf, combo: null }, partner: () => 'idle', acc: 0, hold: 0, held: 0, intro: 0.8, done: false, end: 0, names: ['你', '陪练'], who: ['human', 'partner'], cam: null };
+  L.ask = (side, v) => (side ? L.partner(v) : pad.intent(v, m.tick));
+  live = L; await setMode(mode);
+  $('inf').classList.toggle('on', inf); show(null); $('app').classList.add('fighting', 'practice');
+}
+async function setMode(mode) {
+  const L = live, M = MODES[mode];
+  L.drill.mode = mode; L.names[1] = `陪练 · ${M.label}`; L.hud = null;
+  if (M.bot) { const fn = loadPageBot(await source(M.bot), { seed: botSeed(L.seed, 1), rules: DRILL_RULES, name: `${M.bot}.js` }); L.partner = v => fn(JSON.stringify(v)); }
+  else L.partner = dummy(mode);
+  for (const b of document.querySelectorAll('[data-mode]')) b.classList.toggle('on', b.dataset.mode === mode);
+  $('drilltip').textContent = M.tip;
+}
+function drillTick(L, evs, now) {
+  const R = DRILL_RULES;
+  for (const a of L.m.f) if (a.hp < R.hp * 0.4) a.hp = R.hp;              // no one falls in practice
+  if (L.drill.inf) L.m.f[0].ki = R.kiMax;
+  for (const e of evs) if (e.type === 'hit' && e.side === 0) {            // your combo: how many in a row, how much it took
+    const c = e.combo > 1 && L.drill.combo ? L.drill.combo : (L.drill.combo = { n: 0, dmg: 0 });
+    c.n = Math.max(1, e.combo || 1); c.dmg += e.dmg; c.at = now;
+  }
+  const c = L.drill.combo, on = !!c && now - c.at < 1600;
+  if (c) $('combo').textContent = `${c.n > 1 ? `${c.n} 连击 · ` : ''}${c.dmg} 伤害`;
+  $('combo').classList.toggle('on', on);
+}
+
 let lastT = performance.now(), phase = 0;
 function frame(now) {
   const dt = Math.min(0.1, (now - lastT) / 1000); lastT = now; phase += dt * 60;
@@ -129,10 +166,11 @@ function frame(now) {
           const n0 = m.events.length;
           step(m, L.ask); L.acc -= 1 / 60;
           const evs = m.events.slice(n0);
+          if (L.drill) drillTick(L, evs, now);
           if (evs.length) { snd.events(evs, m.frames[m.frames.length - 1]); const hs = hitstopOf(evs); if (hs) { L.hold = hs; L.acc = 0; break; } }
         }
       }
-      if (m.over && L.hold <= 0) { L.done = true; L.end = now; snd.hush(); }
+      if (m.over && L.hold <= 0) { if (L.drill) { practice(L.drill.mode); requestAnimationFrame(frame); return; } L.done = true; L.end = now; snd.hush(); }
     } else if (now - L.end > 900 && !L.shown) { L.shown = true; finish(L); }
     const frames = m.frames.length ? m.frames : [standing()], byTick = new Map();
     for (const e of m.events.slice(-60)) { if (!byTick.has(e.t)) byTick.set(e.t, []); byTick.get(e.t).push(e); }
