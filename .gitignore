@@ -1,0 +1,26 @@
+# 依赖和系统文件
+node_modules/
+.DS_Store
+
+# 渲染出来的视频和中间文件（几百 MB，发在 B 站）
+out/film/
+out/ep1/
+out/preview/
+
+# 试跑和测试用的联赛结果、旧报告；正式结果只留第一季
+out/league.json
+out/league_test.json
+out/league_trial*.json
+out/league_report.txt
+out/brief.md
+
+# 运行日志里有本机路径
+out/contest/**/run.log
+
+# 配乐音频不放进仓库：都是 CC0，出处和下载页见 assets/music/CREDITS.md
+assets/music/*.wav
+assets/music/*.mp3
+assets/music/candidates/
+
+# 本地服务器的日志
+out/*.log

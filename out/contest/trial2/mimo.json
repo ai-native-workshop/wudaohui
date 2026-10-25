@@ -1,0 +1,23 @@
+{
+  "id": "mimo",
+  "name": "MiMo 2.6 Pro",
+  "provider": "openai-style",
+  "model": "xiaomi/mimo-v2.6-pro",
+  "settings": {
+    "reasoning": {
+      "effort": "medium"
+    }
+  },
+  "started": "2026-10-24T20:21:21.813Z",
+  "servedBy": "xiaomi/mimo-v2.6-pro",
+  "stop": "length",
+  "seconds": 1676,
+  "usage": {
+    "input": 11648,
+    "output": 100000,
+    "reasoning": 100000
+  },
+  "costUSD": 0.09,
+  "line": null,
+  "error": "ran out of max_tokens before the code was done (100000 output tokens, 100000 of them thinking)"
+}

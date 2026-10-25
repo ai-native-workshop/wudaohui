@@ -1,0 +1,30 @@
+{
+  "id": "qwen",
+  "name": "Qwen 3.8 Max",
+  "provider": "openai-style",
+  "model": "qwen/qwen3.8-max-0902",
+  "settings": {
+    "reasoning": {
+      "effort": "medium"
+    }
+  },
+  "started": "2026-10-24T20:21:21.787Z",
+  "servedBy": "qwen/qwen3.8-max-0902",
+  "stop": "stop",
+  "seconds": 645,
+  "usage": {
+    "input": 11837,
+    "output": 32072,
+    "reasoning": 30675
+  },
+  "costUSD": 0.22,
+  "line": "拳出无悔，一击定乾坤。",
+  "warmup": {
+    "games": 28,
+    "wins": 28,
+    "errors": 0,
+    "forfeits": 0,
+    "maxCallMs": 0.2,
+    "avgCallUs": 3
+  }
+}

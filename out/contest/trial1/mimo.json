@@ -1,0 +1,22 @@
+{
+  "id": "mimo",
+  "name": "MiMo 2.6 Pro",
+  "provider": "openai-style",
+  "model": "xiaomi/mimo-v2.6-pro",
+  "settings": {
+    "reasoning": {
+      "effort": "high"
+    }
+  },
+  "started": "2026-10-24T19:52:00.842Z",
+  "servedBy": "xiaomi/mimo-v2.6-pro",
+  "stop": "error",
+  "seconds": 1079,
+  "usage": {
+    "input": 9216,
+    "output": 47706
+  },
+  "costUSD": 0.05,
+  "line": null,
+  "error": "no code block in the reply"
+}

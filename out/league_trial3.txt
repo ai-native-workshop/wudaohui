@@ -1,0 +1,38 @@
+排名  选手            等级分  胜-负-平          胜率   KO胜  判定胜  犯规负  错误/调用   平均思考
+ 1    muse             1701   2374-623-3        79%   2374       0       0    0/254306   4.1 µs
+ 2    minimax          1634   2096-901-3        70%   2096       0       0    0/261224   3.9 µs
+ 3    glm              1382   965-2034-1        32%    965       0       0    0/270652   4.0 µs
+ 4    qwen             1283   561-2438-1        19%    561       0       0    0/195909   4.1 µs
+
+招式占比（发出的招）                                            |  时间占比（可行动时）
+                    light    heavy    blast     beamdash_forwarddash_back  |    guard  charge forward    back    idle   破防  闪避
+muse                  45%      33%      19%       1%       2%       0%  |      25%     12%     63%      0%      0%    0.0   0.6
+minimax               21%      54%       0%       4%       2%      19%  |       5%     16%     75%      0%      4%    1.5   1.3  <- 一招过半
+glm                   39%      25%      13%       0%      13%      10%  |       9%      8%     64%      1%     17%    0.5   1.8
+qwen                  58%      22%      17%       1%       3%       0%  |       4%      1%     93%      2%      0%    3.3   0.7  <- 一招过半
+
+对位胜率（行对列）
+                  muse minimax     glm    qwen
+muse                 -     89%     90%     58%
+minimax            11%       -    100%     99%
+glm                10%      0%       -     87%
+qwen               42%      1%     13%       -
+
+比赛：平均 20.1 秒；KO 100%，判定 0%，平局 0%；有对冲的局 11%，每局大招 0.79 次；赢家血量曾低于 25% 的翻盘局 18%
+终结技：heavy 52%，light 33%，crush 8%，blast 6%，clash 1%，beam 0%
+
+名局候选（按名局分）
+   13.3  glm vs qwen                    seed 2441714613  glm ko             27.4s  血 10/0  对冲 2  领先易手 11  终结 clash
+   12.9  minimax vs muse                seed 4229471633  minimax ko         32.4s  血 32/0  对冲 2  领先易手 5  终结 clash
+   12.8  muse vs minimax                seed 1287714104  muse ko            30.5s  血 38/0  对冲 2  领先易手 4  终结 clash
+   12.6  minimax vs muse                seed 3947030721  minimax ko         29.7s  血 71/0  对冲 2  领先易手 5  终结 clash
+   12.3  minimax vs muse                seed 1247305889  minimax ko         29.4s  血 31/0  对冲 2  领先易手 3  终结 clash
+   12.1  qwen vs glm                    seed 1592412305  glm ko             23.8s  血 0/173  对冲 2  领先易手 5  终结 clash
+   12.0  minimax vs qwen                seed 2253661045  qwen ko            29.5s  血 0/180  对冲 2  领先易手 4  终结 clash
+   11.8  qwen vs glm                    seed 4161796013  qwen ko            28.2s  血 12/0  对冲 1  领先易手 5  终结 clash
+   11.8  qwen vs minimax                seed 4268938237  qwen ko            27.8s  血 126/0  对冲 2  领先易手 3  终结 clash
+   11.6  qwen vs glm                    seed 2568873771  glm ko             23.0s  血 0/151  对冲 2  领先易手 3  终结 clash
+   11.4  qwen vs minimax                seed  991392663  qwen ko            23.2s  血 180/0  对冲 2  领先易手 3  终结 clash
+   11.3  minimax vs muse                seed 2516287439  minimax ko         28.1s  血 249/0  对冲 2  领先易手 5  终结 clash
+
+6000 matches in 1.9 s on 11 workers -> out/league_trial3.json

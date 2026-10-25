@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>AI 武道会 · 点击即玩</title><link rel="icon" href="data:,">
+<style>
+  :root { --bg: #070b1c; --panel: #101836; --line: #ffffff1f; --ink: #e9ecff; --dim: #9aa3c7; --gold: #ffe36b; --btn: #ffffff14; --btn-on: #ffffff40; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); overflow: hidden; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif; }
+  button { font: inherit; color: inherit; }
+  #app { position: fixed; inset: 0; display: flex; flex-direction: column; }
+  #stage { position: relative; flex: none; background: #000; }
+  canvas { display: block; width: 100%; height: auto; }
+  #hint, #banner { position: absolute; left: 0; right: 0; text-align: center; pointer-events: none; font-weight: 900; text-shadow: 0 0 12px #000, 0 2px 0 #000; }
+  #hint { bottom: 18%; font-size: clamp(14px, 3.4vw, 26px); color: var(--gold); opacity: 0; transition: opacity .15s; }
+  #hint.on { opacity: 1; animation: pulse .5s infinite alternate; }
+  #banner { top: 34%; font-size: clamp(28px, 9vw, 96px); color: #fff6d0; letter-spacing: .06em; }
+  @keyframes pulse { to { transform: scale(1.08); } }
+  #quit { position: absolute; bottom: 6px; right: 6px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); background: #0008; font-size: 16px; display: none; }
+  /* the bars, names and clock: page elements over the picture, so they stay readable however small the picture is */
+  #hud { position: absolute; top: 0; left: 0; right: 0; display: flex; align-items: flex-start; gap: 8px; padding: 6px 8px; pointer-events: none; }
+  #hud .side { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+  #hud .side.r { align-items: flex-end; }
+  #hud .bar { width: 100%; height: clamp(8px, 2.2vw, 16px); background: #0009; border: 1px solid #ffffff33; transform: skewX(-18deg); overflow: hidden; }
+  #hud .ki { width: 70%; height: clamp(3px, .9vw, 6px); background: #0009; overflow: hidden; }
+  #hud i { display: block; height: 100%; width: 100%; background: #fff; transition: width .08s linear; }
+  #hud .r .bar i, #hud .r .ki i { margin-left: auto; }
+  #hud .name { font-size: clamp(11px, 2.8vw, 18px); font-weight: 800; text-shadow: 0 1px 2px #000; }
+  #clock { font-size: clamp(16px, 4.4vw, 34px); font-weight: 900; min-width: 2.2em; text-align: center; text-shadow: 0 1px 3px #000; line-height: 1; }
+  #app:not(.fighting) #hud { visibility: hidden; }
+  #app.fighting #quit { display: block; }
+  /* the buttons: under the picture when the phone is upright, either side of it when it lies down */
+  #pad { flex: 1; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 14px calc(14px + env(safe-area-inset-bottom)); touch-action: none; }
+  .cluster { display: flex; flex-direction: column; gap: 10px; align-items: center; touch-action: none; }
+  .row { display: flex; gap: 10px; }
+  .grid { display: grid; grid-template-columns: repeat(2, auto); gap: 10px; }
+  [data-b] { width: var(--b, min(19vw, 86px)); height: var(--b, min(19vw, 86px)); border-radius: 50%; border: 2px solid #ffffff33; background: var(--btn); font-weight: 800;
+    font-size: clamp(13px, 3.6vw, 18px); touch-action: none; display: flex; align-items: center; justify-content: center; white-space: nowrap; }
+  [data-b].on { background: var(--btn-on); border-color: #fff; transform: scale(.94); }
+  [data-b="left"], [data-b="right"] { border-radius: 22px; font-size: clamp(18px, 5vw, 26px); }
+  [data-b="light"] { border-color: #ffb15c; } [data-b="heavy"] { border-color: #ff6a6a; } [data-b="blast"] { border-color: #5ff2c8; } [data-b="beam"] { border-color: #ffe36b; }
+  [data-b="dash"] { width: calc(2 * var(--b, min(19vw, 86px)) + 10px); border-radius: 22px; height: calc(var(--b, min(19vw, 86px)) * .62); border-color: #d79bff; }
+  #keys { display: none; text-align: center; color: var(--dim); font-size: 14px; padding: 12px; line-height: 1.8; }
+  @media (orientation: landscape) and (pointer: coarse) {
+    #app { flex-direction: row; align-items: center; }
+    #pad { display: contents; }
+    #lpad { order: 0; } #stage { order: 1; flex: 1; } #rpad { order: 2; }
+    .cluster { padding: 0 10px; --b: min(10.5vw, 19vh, 80px); }
+    [data-b] { font-size: clamp(12px, 3.6vh, 16px); }
+  }
+  @media (pointer: fine) {
+    #app { align-items: center; justify-content: center; }
+    #stage { width: min(100vw, 1280px, 170vh); }
+    #pad { display: none; } #keys { display: block; }
+  }
+  /* screens over the picture */
+  #select, #help, #boards { background: var(--bg); }
+  .screen { position: fixed; inset: 0; background: #070b1ce8; overflow-y: auto; padding: calc(16px + env(safe-area-inset-top)) 16px calc(24px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; align-items: center; z-index: 5; }
+  .screen.hidden { display: none; }
+  h1 { margin: 6px 0 2px; font-size: clamp(26px, 7vw, 44px); font-weight: 900; color: #fff6d0; text-shadow: 0 0 18px #ffb15c88; }
+  .sub { color: var(--dim); margin: 0 0 14px; font-size: 14px; text-align: center; }
+  #cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; width: min(100%, 760px); }
+  @media (min-width: 640px) { #cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .card { position: relative; display: flex; gap: 8px; align-items: center; text-align: left; padding: 8px 10px 8px 4px; border-radius: 14px; background: var(--panel); border: 1px solid var(--line); }
+  .card canvas { width: 64px; height: 80px; flex: none; }
+  .card b { font-size: 19px; display: block; }
+  .card small { display: block; color: var(--dim); font-size: 12px; line-height: 1.5; }
+  .badge { position: absolute; top: 6px; right: 8px; font-size: 12px; font-weight: 800; color: #1a1300; background: var(--gold); border-radius: 8px; padding: 1px 6px; }
+  .badge.silver { background: #d9def0; }
+  .wide-btn { width: min(100%, 760px); margin-top: 10px; padding: 13px; border-radius: 14px; border: 1px solid #ffe36b66; background: #ffe36b14; font-weight: 800; font-size: 16px; }
+  .wide-btn small { display: block; font-weight: 400; color: var(--dim); font-size: 12px; margin-top: 2px; }
+  .links { display: flex; gap: 10px; width: min(100%, 760px); }
+  .links .wide-btn { border-color: var(--line); background: var(--panel); }
+  .me { color: var(--dim); font-size: 13px; margin-top: 12px; }
+  #result .big { font-size: clamp(40px, 12vw, 76px); font-weight: 900; margin: 8vh 0 4px; }
+  #result .why { color: var(--dim); margin-bottom: 18px; }
+  .bubble { max-width: min(92vw, 560px); background: #fff; color: #11131c; border: 4px solid var(--c, #fff); border-radius: 26px; padding: 12px 18px; font-size: 18px; font-weight: 800; position: relative; margin: 0 0 6px; }
+  .who { color: var(--c); font-weight: 800; margin-bottom: 18px; }
+  .stats { color: var(--ink); margin: 6px 0 18px; }
+  #help .box, #boards .box { width: min(100%, 560px); background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; line-height: 1.9; font-size: 15px; }
+  #help b { color: var(--gold); }
+</style></head>
+<body>
+<div id="app">
+  <div id="stage"><canvas id="c" width="1280" height="640"></canvas>
+    <div id="hud"><div class="side"><div class="bar"><i class="hp"></i></div><div class="ki"><i></i></div><span class="name"></span></div><b id="clock">60</b><div class="side r"><div class="bar"><i class="hp"></i></div><div class="ki"><i></i></div><span class="name"></span></div></div>
+    <div id="banner"></div><div id="hint">按住 轻拳（J）推回去！</div><button id="quit" aria-label="退出">✕</button></div>
+  <div id="pad">
+    <div class="cluster" id="lpad">
+      <div class="row"><button data-b="left">◀</button><button data-b="right">▶</button></div>
+      <div class="row"><button data-b="guard">格挡</button><button data-b="charge">蓄气</button></div>
+    </div>
+    <div class="cluster" id="rpad">
+      <div class="grid"><button data-b="light">轻拳</button><button data-b="heavy">重击</button><button data-b="blast">气弹</button><button data-b="beam">气功波</button></div>
+      <button data-b="dash">瞬移</button>
+    </div>
+  </div>
+  <div id="keys">A / D 走位 · S 格挡 · W 蓄气 · J 轻拳 · K 重击 · L 气弹 · I 气功波 · 空格 瞬移（按住后退方向是后撤）· 对波时按住 J 推回去</div>
+</div>
+
+<div id="select" class="screen">
+  <h1>AI 武道会</h1>
+  <p class="sub">挑一个 AI，亲手跟它写的程序打一局<br>它们在联赛里互相打了 <span id="games">15000</span> 局</p>
+  <div id="cards"></div>
+  <button class="wide-btn" id="gauntlet">车轮战：连打 6 家<small id="gauntlet-sub">从最后一名打到冠军，输一局就结束</small></button>
+  <div class="links"><button class="wide-btn" id="how">怎么玩</button><button class="wide-btn" id="ranks" hidden>排行榜</button></div>
+  <div class="me" id="me"></div>
+</div>
+
+<div id="result" class="screen hidden">
+  <div class="big" id="r-big"></div>
+  <div class="why" id="r-why"></div>
+  <div class="bubble" id="r-line"></div>
+  <div class="who" id="r-who"></div>
+  <div class="stats" id="r-stats"></div>
+  <button class="wide-btn" id="r-next" hidden></button>
+  <div class="links"><button class="wide-btn" id="r-again">再来一局</button><button class="wide-btn" id="r-back">换对手</button></div>
+</div>
+
+<div id="help" class="screen hidden">
+  <h1>怎么玩</h1>
+  <div class="box">
+    <b>◀ ▶</b> 走位。往前走回气快，往后退回气慢<br>
+    <b>格挡</b>（按住）挡拳挡波，挡一下扣一点气，没气就被破防；重击一定破防<br>
+    <b>蓄气</b>（按住）回气，但这时挨打伤害 ×1.5<br>
+    <b>轻拳</b> 出手快，打中能马上接下一招（连段）<br>
+    <b>重击</b> 出手慢，破防、击倒<br>
+    <b>气弹</b> 14 气，远程一发<br>
+    <b>气功波</b> 50 气，蓄 0.5 秒，打中 280<br>
+    <b>瞬移</b> 16 气，短暂无敌，能穿到对面身后；按住后退方向是后撤<br>
+    <b>对波</b> 两道气功波撞上时，按住 轻拳 推回去<br>
+    每局 60 秒，1500 血。电脑上用键盘：A/D 走位，S 格挡，W 蓄气，J/K/L/I 出招，空格瞬移。
+  </div>
+  <button class="wide-btn" id="help-ok">开打</button>
+</div>
+
+<div id="boards" class="screen hidden">
+  <h1>排行榜</h1>
+  <div class="links"><button class="wide-btn" data-board="streak">连胜榜</button><button class="wide-btn" data-board="champion">冠军挑战榜</button></div>
+  <div class="box" id="board-list" style="margin-top:10px"></div>
+  <button class="wide-btn" id="boards-ok">返回</button>
+</div>
+<script type="module" src="./main.js"></script>
+</body></html>

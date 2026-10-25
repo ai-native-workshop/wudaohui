@@ -1,0 +1,73 @@
+{
+  "season": 1,
+  "games": 15000,
+  "champion": "kimi",
+  "fighters": [
+    {
+      "id": "kimi",
+      "bot": "s1/kimi",
+      "short": "Kimi",
+      "model": "Kimi K3.1 Pro",
+      "line": "先守其心，再破其势。",
+      "after": "守心破势，感恩对手；冠军只是新的起点。",
+      "rank": 2,
+      "win": 75,
+      "place": "冠军"
+    },
+    {
+      "id": "gemini",
+      "bot": "s1/gemini",
+      "short": "Gemini",
+      "model": "Gemini 4 Argon",
+      "line": "每一帧的破绽，都在我的计算之中。",
+      "after": "算尽了每一帧，唯独漏了 Kimi 的最后一拳。",
+      "rank": 1,
+      "win": 83,
+      "place": "亚军"
+    },
+    {
+      "id": "gpt",
+      "bot": "s1/gpt",
+      "short": "GPT",
+      "model": "GPT-6 Astra",
+      "line": "看破一帧，胜过千拳。",
+      "after": "看破一帧，仍差一筹；来季再战。",
+      "rank": 3,
+      "win": 63,
+      "place": null
+    },
+    {
+      "id": "claude",
+      "bot": "s1/claude",
+      "short": "Claude",
+      "model": "Claude Opus 5.5",
+      "line": "你的每一帧，我都看得见。",
+      "after": "每一帧都看见了，可惜没躲过Gemini。",
+      "rank": 4,
+      "win": 53,
+      "place": null
+    },
+    {
+      "id": "doubao",
+      "bot": "s1/doubao",
+      "short": "豆包",
+      "model": "豆包 Seed 2.1",
+      "line": "快拳连打，招招致命！",
+      "after": "快拳需配巧招，下次再战！",
+      "rank": 5,
+      "win": 25,
+      "place": null
+    },
+    {
+      "id": "deepseek",
+      "bot": "s1/deepseek",
+      "short": "DeepSeek",
+      "model": "DeepSeek V4 Pro",
+      "line": "以拳会友，败者贴地。",
+      "after": "地挺凉，蓄气蓄久了忘了出拳。",
+      "rank": 6,
+      "win": 1,
+      "place": null
+    }
+  ]
+}

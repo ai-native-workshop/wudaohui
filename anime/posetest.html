@@ -1,0 +1,23 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>蓄气姿势</title><link rel="icon" href="data:,"><style>html,body{margin:0;background:#05060c}canvas{display:block}</style></head>
+<body><canvas id="c" width="1600" height="560"></canvas>
+<script type="module">
+import { drawStick } from './stick.js';
+import { RULES } from '../src/rules.js';
+const c = document.getElementById('c'), g = c.getContext('2d');
+const gr = g.createLinearGradient(0, 0, 0, c.height); gr.addColorStop(0, '#0b1a36'); gr.addColorStop(1, '#1f4a66'); g.fillStyle = gr; g.fillRect(0, 0, c.width, c.height);
+const legs = { fl: [0.5, -0.25], bl: [-0.5, 0.25] };
+const V = [
+  ['A 现在：手臂往斜后方伸直', { lean: -0.12, crouch: 16, fa: [-0.45, 0.35], ba: [-0.6, 0.3], ...legs }],
+  ['B 握拳收在腰间，手肘往后', { lean: -0.04, crouch: 18, fa: [-0.62, 1.75], ba: [-0.78, 1.8], ...legs }],
+  ['C 同 B，马步更低，身体后仰怒吼', { lean: -0.22, crouch: 26, fa: [-0.55, 1.7], ba: [-0.7, 1.75], fl: [0.68, -0.5], bl: [-0.66, 0.36] }],
+  ['D 两拳往下、往前后撑开爆气', { lean: -0.1, crouch: 22, fa: [0.42, 0.25], ba: [-0.5, -0.2], fl: [0.6, -0.4], bl: [-0.6, 0.3] }],
+];
+V.forEach(([label, pose], i) => {
+  g.save(); g.translate(200 + i * 400, 470); g.scale(1.6, 1.6);
+  drawStick(g, 'claude', [0, 'charge', 0, 1, 1500, 90, null, 0], RULES, { pose, px: 1.6 });
+  g.restore();
+  g.font = '600 24px "PingFang SC", sans-serif'; g.fillStyle = '#fff'; g.textAlign = 'center'; g.fillText(label, 200 + i * 400, 530);
+});
+window.READY = true;
+</script></body></html>

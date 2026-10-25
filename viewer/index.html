@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 武道会 · 擂台</title>
+<link rel="icon" href="data:,">
+<style>
+  :root { --bg: #0b0e1a; --panel: #141a2e; --text: #e8ecf8; --dim: #8d97b5; --line: #26304f; --accent: #ffe36b; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.5 system-ui, -apple-system, "PingFang SC", sans-serif; }
+  header { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 10px 16px; background: var(--panel); border-bottom: 1px solid var(--line); }
+  header h1 { font-size: 16px; margin: 0 12px 0 0; color: var(--accent); letter-spacing: 1px; }
+  select, input, button { background: #0d1224; color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; font: inherit; }
+  button { cursor: pointer; } button.go { background: #ffe36b; color: #111; border-color: #ffe36b; font-weight: 700; }
+  main { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 12px; padding: 12px 16px; }
+  canvas { width: 100%; height: auto; display: block; border-radius: 8px; background: #000; }
+  .bar { display: flex; gap: 8px; align-items: center; margin-top: 8px; flex-wrap: wrap; }
+  .bar input[type=range] { flex: 1; min-width: 160px; }
+  aside { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; height: fit-content; }
+  aside h2 { font-size: 13px; color: var(--dim); margin: 6px 0; font-weight: 600; }
+  #log { font: 12px/1.6 ui-monospace, monospace; max-height: 360px; overflow: auto; white-space: pre-wrap; color: #c9d1ea; }
+  .keys { color: var(--dim); font-size: 12px; } .keys b { color: var(--text); font-weight: 600; }
+  #result { font-weight: 700; color: var(--accent); }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>AI 武道会 · 擂台</h1>
+  <label>左 <select id="left"></select></label>
+  <label>右 <select id="right"></select></label>
+  <label>种子 <input id="seed" type="number" value="1" style="width:120px"></label>
+  <button id="dice" title="换一个种子">🎲</button>
+  <button id="go" class="go">开打</button>
+  <label>名局 <select id="hl" style="max-width:340px"><option value="">（联赛里挑）</option></select></label>
+</header>
+<main>
+  <section>
+    <canvas id="c" width="1280" height="640"></canvas>
+    <div class="bar">
+      <button id="play">⏸</button>
+      <button id="back1" title="上一帧 (,)">◀︎</button><button id="fwd1" title="下一帧 (.)">▶︎</button>
+      <select id="speed"><option>0.25</option><option>0.5</option><option selected>1</option><option>2</option><option>4</option></select>
+      <input id="scrub" type="range" min="0" max="0" value="0">
+      <span id="time">0.0 s</span>
+      <label><input id="sound" type="checkbox" checked> 音效</label>
+      <input id="vol" type="range" min="0" max="1.2" step="0.05" value="0.8" style="width:80px; flex:none" title="音量">
+      <label><input id="stop" type="checkbox" checked> 打击停顿</label>
+    </div>
+  </section>
+  <aside>
+    <div id="result"></div>
+    <h2>发生了什么</h2>
+    <div id="log"></div>
+    <h2>自己上场（选“你（键盘）”）</h2>
+    <div class="keys"><b>A / D</b> 或 <b>← / →</b> 移动　<b>S</b> 按住格挡　<b>W</b> 按住蓄气<br><b>J</b> 轻拳　<b>K</b> 重击　<b>L</b> 气功波　<b>I</b> 大招<br><b>空格</b> 瞬移（按住后退方向是后撤）<br>对冲时按住 <b>J</b> 加力</div>
+  </aside>
+</main>
+<script type="module" src="./viewer.js"></script>
+</body>
+</html>

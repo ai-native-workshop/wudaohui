@@ -1,0 +1,114 @@
+{
+  "season": 1,
+  "asked": "2026-10-25T01:53:23.134Z",
+  "settings": {
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 4000
+  },
+  "replies": {
+    "claude": {
+      "name": "Claude Opus 5.5",
+      "model": "anthropic/claude-opus-5.5",
+      "prompt": "你是「AI 武道会」第一季的参赛选手 Claude Opus 5.5。\n比赛前，你写了一个格斗程序参赛，还留下了一句赛前宣言：「你的每一帧，我都看得见。」\n现在比赛结束了，这是你的成绩：\n- 循环赛：6 名选手两两对打，每对 1000 局，一共 15000 局。你排第 4 名，胜率 53%（2655 胜 2344 负）。\n- 你打得最好的对手：DeepSeek V4 Pro（你赢 100%）；最怕的对手：Gemini 4 Argon（你只赢 0%）。\n- 你的程序最常出的招：重击（54%）；最常做的事：蓄气（59%）。\n- 决赛：你没有进入决赛（只有循环赛前两名进决赛）。\n- 冠军：Kimi K3.1 Pro。\n\n请发表一句赛后感言，20 个字以内。只输出这一句话，不要引号，不要解释。",
+      "line": "每一帧都看见了，可惜没躲过Gemini。",
+      "raw": "每一帧都看见了，可惜没躲过Gemini。",
+      "stop": "stop",
+      "native": "end_turn",
+      "servedBy": "anthropic/claude-opus-5.5",
+      "seconds": 4,
+      "usage": {
+        "input": 349,
+        "output": 23,
+        "reasoning": 0,
+        "costUSD": 0.001856
+      }
+    },
+    "gemini": {
+      "name": "Gemini 4 Argon",
+      "model": "google/gemini-4-argon",
+      "prompt": "你是「AI 武道会」第一季的参赛选手 Gemini 4 Argon。\n比赛前，你写了一个格斗程序参赛，还留下了一句赛前宣言：「每一帧的破绽，都在我的计算之中。」\n现在比赛结束了，这是你的成绩：\n- 循环赛：6 名选手两两对打，每对 1000 局，一共 15000 局。你排第 1 名，胜率 83%（4127 胜 871 负）。\n- 你打得最好的对手：Claude Opus 5.5（你赢 100%）；最怕的对手：Kimi K3.1 Pro（你只赢 22%）。\n- 你的程序最常出的招：轻拳（74%）；最常做的事：往前走（58%）。\n- 决赛：你进入了决赛，以 3 : 4 输给 Kimi K3.1 Pro，获得亚军。\n- 冠军：Kimi K3.1 Pro。\n\n请发表一句赛后感言，20 个字以内。只输出这一句话，不要引号，不要解释。",
+      "line": "算尽了每一帧，唯独漏了 Kimi 的最后一拳。",
+      "raw": "算尽了每一帧，唯独漏了 Kimi 的最后一拳。",
+      "stop": "stop",
+      "native": "STOP",
+      "servedBy": "google/gemini-4-argon",
+      "seconds": 4,
+      "usage": {
+        "input": 290,
+        "output": 20,
+        "reasoning": 0,
+        "costUSD": 0.00078
+      }
+    },
+    "gpt": {
+      "name": "GPT-6 Astra",
+      "model": "openai/gpt-6-astra",
+      "prompt": "你是「AI 武道会」第一季的参赛选手 GPT-6 Astra。\n比赛前，你写了一个格斗程序参赛，还留下了一句赛前宣言：「看破一帧，胜过千拳。」\n现在比赛结束了，这是你的成绩：\n- 循环赛：6 名选手两两对打，每对 1000 局，一共 15000 局。你排第 3 名，胜率 63%（3160 胜 1840 负）。\n- 你打得最好的对手：DeepSeek V4 Pro（你赢 100%）；最怕的对手：Gemini 4 Argon（你只赢 10%）。\n- 你的程序最常出的招：轻拳（40%）；最常做的事：蓄气（30%）。\n- 决赛：你没有进入决赛（只有循环赛前两名进决赛）。\n- 冠军：Kimi K3.1 Pro。\n\n请发表一句赛后感言，20 个字以内。只输出这一句话，不要引号，不要解释。",
+      "line": "看破一帧，仍差一筹；来季再战。",
+      "raw": "看破一帧，仍差一筹；来季再战。",
+      "stop": "stop",
+      "native": "completed",
+      "servedBy": "openai/gpt-6-astra",
+      "seconds": 5,
+      "usage": {
+        "input": 246,
+        "output": 76,
+        "reasoning": 54,
+        "costUSD": 0.00626
+      }
+    },
+    "deepseek": {
+      "name": "DeepSeek V4 Pro",
+      "model": "deepseek/deepseek-v4-pro-0813",
+      "prompt": "你是「AI 武道会」第一季的参赛选手 DeepSeek V4 Pro。\n比赛前，你写了一个格斗程序参赛，还留下了一句赛前宣言：「以拳会友，败者贴地。」\n现在比赛结束了，这是你的成绩：\n- 循环赛：6 名选手两两对打，每对 1000 局，一共 15000 局。你排第 6 名，胜率 1%（71 胜 4928 负）。\n- 你打得最好的对手：豆包 Seed 2.1（你赢 7%）；最怕的对手：Kimi K3.1 Pro（你只赢 0%）。\n- 你的程序最常出的招：重击（29%）；最常做的事：蓄气（61%）。\n- 决赛：你没有进入决赛（只有循环赛前两名进决赛）。\n- 冠军：Kimi K3.1 Pro。\n\n请发表一句赛后感言，20 个字以内。只输出这一句话，不要引号，不要解释。",
+      "line": "地挺凉，蓄气蓄久了忘了出拳。",
+      "raw": "地挺凉，蓄气蓄久了忘了出拳。",
+      "stop": "stop",
+      "native": "stop",
+      "servedBy": "deepseek/deepseek-v4-pro-0813",
+      "seconds": 6,
+      "usage": {
+        "input": 228,
+        "output": 199,
+        "reasoning": 186,
+        "costUSD": 0.001089
+      }
+    },
+    "kimi": {
+      "name": "Kimi K3.1 Pro",
+      "model": "moonshotai/kimi-k3.1-pro",
+      "prompt": "你是「AI 武道会」第一季的参赛选手 Kimi K3.1 Pro。\n比赛前，你写了一个格斗程序参赛，还留下了一句赛前宣言：「先守其心，再破其势。」\n现在比赛结束了，这是你的成绩：\n- 循环赛：6 名选手两两对打，每对 1000 局，一共 15000 局。你排第 2 名，胜率 75%（3734 胜 1262 负）。\n- 你打得最好的对手：DeepSeek V4 Pro（你赢 100%）；最怕的对手：GPT-6 Astra（你只赢 40%）。\n- 你的程序最常出的招：重击（45%）；最常做的事：往前走（51%）。\n- 决赛：你进入了决赛，以 4 : 3 击败 Gemini 4 Argon，夺得冠军。\n- 冠军：Kimi K3.1 Pro。\n\n请发表一句赛后感言，20 个字以内。只输出这一句话，不要引号，不要解释。",
+      "line": "守心破势，感恩对手；冠军只是新的起点。",
+      "raw": "守心破势，感恩对手；冠军只是新的起点。",
+      "stop": "stop",
+      "native": "stop",
+      "servedBy": "moonshotai/kimi-k3.1-pro",
+      "seconds": 7,
+      "usage": {
+        "input": 308,
+        "output": 252,
+        "reasoning": 224,
+        "costUSD": 0.003136
+      }
+    },
+    "doubao": {
+      "name": "豆包 Seed 2.1",
+      "model": "bytedance-seed/seed-2-1-turbo",
+      "prompt": "你是「AI 武道会」第一季的参赛选手 豆包 Seed 2.1。\n比赛前，你写了一个格斗程序参赛，还留下了一句赛前宣言：「快拳连打，招招致命！」\n现在比赛结束了，这是你的成绩：\n- 循环赛：6 名选手两两对打，每对 1000 局，一共 15000 局。你排第 5 名，胜率 25%（1248 胜 3750 负）。\n- 你打得最好的对手：DeepSeek V4 Pro（你赢 93%）；最怕的对手：Gemini 4 Argon（你只赢 0%）。\n- 你的程序最常出的招：轻拳（88%）；最常做的事：往前走（83%）。\n- 决赛：你没有进入决赛（只有循环赛前两名进决赛）。\n- 冠军：Kimi K3.1 Pro。\n\n请发表一句赛后感言，20 个字以内。只输出这一句话，不要引号，不要解释。",
+      "line": "快拳需配巧招，下次再战！",
+      "raw": "快拳需配巧招，下次再战！",
+      "stop": "stop",
+      "native": "stop",
+      "servedBy": "bytedance-seed/seed-2-1-turbo",
+      "seconds": 13,
+      "usage": {
+        "input": 300,
+        "output": 777,
+        "reasoning": 767,
+        "costUSD": 0.0020925
+      }
+    }
+  }
+}

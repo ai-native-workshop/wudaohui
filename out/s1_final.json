@@ -1,0 +1,145 @@
+{
+  "season": 1,
+  "a": "s1/gemini",
+  "b": "s1/kimi",
+  "champion": "s1/kimi",
+  "wins": {
+    "s1/gemini": 3,
+    "s1/kimi": 4
+  },
+  "games": [
+    {
+      "n": 1,
+      "seed": 2402202482,
+      "left": "s1/gemini",
+      "right": "s1/kimi",
+      "winner": "s1/kimi",
+      "reason": "ko",
+      "secs": 28.7,
+      "hp": [
+        0,
+        296
+      ],
+      "clashes": 0,
+      "finisher": "heavy",
+      "score": {
+        "s1/gemini": 0,
+        "s1/kimi": 1
+      }
+    },
+    {
+      "n": 2,
+      "seed": 1179650105,
+      "left": "s1/kimi",
+      "right": "s1/gemini",
+      "winner": "s1/gemini",
+      "reason": "ko",
+      "secs": 24.2,
+      "hp": [
+        0,
+        480
+      ],
+      "clashes": 0,
+      "finisher": "heavy",
+      "score": {
+        "s1/gemini": 1,
+        "s1/kimi": 1
+      }
+    },
+    {
+      "n": 3,
+      "seed": 3249123762,
+      "left": "s1/gemini",
+      "right": "s1/kimi",
+      "winner": "s1/kimi",
+      "reason": "ko",
+      "secs": 24.1,
+      "hp": [
+        0,
+        416
+      ],
+      "clashes": 0,
+      "finisher": "heavy",
+      "score": {
+        "s1/gemini": 1,
+        "s1/kimi": 2
+      }
+    },
+    {
+      "n": 4,
+      "seed": 1383458309,
+      "left": "s1/kimi",
+      "right": "s1/gemini",
+      "winner": "s1/kimi",
+      "reason": "ko",
+      "secs": 21.8,
+      "hp": [
+        486,
+        0
+      ],
+      "clashes": 0,
+      "finisher": "light",
+      "score": {
+        "s1/gemini": 1,
+        "s1/kimi": 3
+      }
+    },
+    {
+      "n": 5,
+      "seed": 2399015069,
+      "left": "s1/gemini",
+      "right": "s1/kimi",
+      "winner": "s1/gemini",
+      "reason": "ko",
+      "secs": 26.3,
+      "hp": [
+        270,
+        0
+      ],
+      "clashes": 0,
+      "finisher": "heavy",
+      "score": {
+        "s1/gemini": 2,
+        "s1/kimi": 3
+      }
+    },
+    {
+      "n": 6,
+      "seed": 668569140,
+      "left": "s1/kimi",
+      "right": "s1/gemini",
+      "winner": "s1/gemini",
+      "reason": "ko",
+      "secs": 31.1,
+      "hp": [
+        0,
+        44
+      ],
+      "clashes": 0,
+      "finisher": "heavy",
+      "score": {
+        "s1/gemini": 3,
+        "s1/kimi": 3
+      }
+    },
+    {
+      "n": 7,
+      "seed": 635266567,
+      "left": "s1/gemini",
+      "right": "s1/kimi",
+      "winner": "s1/kimi",
+      "reason": "ko",
+      "secs": 19.9,
+      "hp": [
+        0,
+        960
+      ],
+      "clashes": 0,
+      "finisher": "heavy",
+      "score": {
+        "s1/gemini": 3,
+        "s1/kimi": 4
+      }
+    }
+  ]
+}

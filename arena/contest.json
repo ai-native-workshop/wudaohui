@@ -1,0 +1,13 @@
+{
+  "season": 1,
+  "games": 1000,
+  "attempts": 2,
+  "contestants": [
+    { "id": "claude", "name": "Claude Opus 5.5", "provider": "openai-style", "baseURL": "https://openrouter.ai/api/v1", "keyEnv": "OPENROUTER_API_KEY", "model": "anthropic/claude-opus-5.5", "maxTokens": 128000, "body": { "reasoning": { "effort": "high" } }, "price": [4, 20] },
+    { "id": "gpt", "name": "GPT-6 Astra", "provider": "openai-style", "baseURL": "https://openrouter.ai/api/v1", "keyEnv": "OPENROUTER_API_KEY", "model": "openai/gpt-6-astra", "maxTokens": 128000, "body": { "reasoning": { "effort": "high" } }, "price": [10, 50] },
+    { "id": "gemini", "name": "Gemini 4 Argon", "provider": "openai-style", "baseURL": "https://openrouter.ai/api/v1", "keyEnv": "OPENROUTER_API_KEY", "model": "google/gemini-4-argon", "maxTokens": 128000, "body": { "reasoning": { "effort": "high" } }, "price": [2, 10] },
+    { "id": "kimi", "name": "Kimi K3.1 Pro", "provider": "openai-style", "baseURL": "https://openrouter.ai/api/v1", "keyEnv": "OPENROUTER_API_KEY", "model": "moonshotai/kimi-k3.1-pro", "maxTokens": 128000, "body": { "reasoning": { "effort": "high" } }, "price": [2, 10] },
+    { "id": "deepseek", "name": "DeepSeek V4 Pro", "provider": "openai-style", "baseURL": "https://openrouter.ai/api/v1", "keyEnv": "OPENROUTER_API_KEY", "model": "deepseek/deepseek-v4-pro-0813", "maxTokens": 128000, "body": { "reasoning": { "effort": "high" } }, "price": [0.66, 1.98] },
+    { "id": "doubao", "name": "豆包 Seed 2.1", "provider": "openai-style", "baseURL": "https://openrouter.ai/api/v1", "keyEnv": "OPENROUTER_API_KEY", "model": "bytedance-seed/seed-2-1-turbo", "maxTokens": 128000, "body": { "reasoning": { "effort": "high" } }, "price": [0.5, 2.5] }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "id": "minimax",
+  "name": "MiniMax M3.1 Flash",
+  "provider": "openai-style",
+  "model": "minimax/minimax-m3.1-flash",
+  "settings": {
+    "reasoning": {
+      "effort": "medium"
+    }
+  },
+  "maxTokens": 100000,
+  "started": "2026-10-24T20:55:11.521Z",
+  "tries": [
+    {
+      "n": 1,
+      "servedBy": "minimax/minimax-m3.1-flash",
+      "stop": "stop",
+      "seconds": 309,
+      "usage": {
+        "input": 12022,
+        "output": 41673,
+        "reasoning": 0
+      },
+      "costUSD": 0.03
+    }
+  ],
+  "servedBy": "minimax/minimax-m3.1-flash",
+  "stop": "stop",
+  "line": "以拳会友，以气争锋。",
+  "attempt": 1,
+  "warmup": {
+    "games": 28,
+    "wins": 21,
+    "errors": 0,
+    "forfeits": 0,
+    "maxCallMs": 0.1,
+    "avgCallUs": 3
+  },
+  "seconds": 309,
+  "costUSD": 0.03
+}

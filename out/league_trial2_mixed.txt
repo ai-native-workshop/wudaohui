@@ -1,0 +1,56 @@
+排名  选手            等级分  胜-负-平          胜率   KO胜  判定胜  犯规负  错误/调用   平均思考
+ 1    qwen             2461   1782-17-1         99%   1627     155       0    0/169339   3.6 µs
+ 2    glm              1934   1443-356-1        80%   1362      81       0    0/201873   5.1 µs
+ 3    minimax          1807   1289-507-4        72%   1115     174       0    0/275427   3.2 µs
+ 4    reactor          1733   1189-608-3        66%   1162      27       0    0/168052   3.5 µs
+ 5    tactician        1649   1073-724-3        60%   1073       0       0    0/149164   3.9 µs
+ 6    turtle           1483   847-953-0         47%    847       0       0    0/206499   2.8 µs
+ 7    mixer            1293   613-1185-2        34%    612       1       0    0/167119   3.5 µs
+ 8    zoner            1198   511-1289-0        28%    510       1       0    0/175216   3.0 µs
+ 9    rusher            779   163-1637-0         9%    163       0       0     0/69625   4.1 µs
+10    random            663   83-1717-0          5%     83       0       0    0/113807   3.8 µs
+
+招式占比（发出的招）                                            |  时间占比（可行动时）
+                    light    heavy    blast     beamdash_forwarddash_back  |    guard  charge forward    back    idle   破防  闪避
+qwen                  62%      36%       1%       0%       1%       0%  |      30%      0%     61%     10%      0%    2.9   0.0  <- 一招过半
+glm                   60%      17%       2%       1%       9%      11%  |      22%     15%     50%     13%      0%    2.2   0.5  <- 一招过半
+minimax               66%      16%       6%       0%      10%       1%  |      19%     26%     48%      4%      3%    0.3   3.6  <- 一招过半
+reactor               77%      22%       0%       1%       0%       0%  |      21%      2%     77%      0%      0%    0.8   0.0  <- 一招过半
+tactician             66%      26%       3%       3%       2%       0%  |      37%      1%     55%      7%      0%    2.1   0.4  <- 一招过半
+turtle                79%      15%       0%       6%       0%       0%  |      91%      9%      0%      0%      0%    0.0   0.0  <- 一招过半
+mixer                 49%      27%       0%       1%      13%      11%  |      28%      7%     64%      0%      0%    1.5   1.2
+zoner                 69%       0%      28%       1%       0%       2%  |       3%     49%      0%     48%      0%    0.0   0.1  <- 一招过半
+rusher                68%      20%       0%       0%      12%       0%  |       0%      0%    100%      0%      0%    0.1   0.0  <- 一招过半
+random                26%      27%      11%       1%      18%      18%  |      17%     17%     17%     18%     31%    0.2   0.9
+
+对位胜率（行对列）
+                  qwen     glm minimax reactor tactici  turtle   mixer   zoner  rusher  random
+qwen                 -     97%     96%    100%    100%    100%    100%    100%    100%    100%
+glm                 4%       -     38%     90%     97%    100%     95%    100%    100%    100%
+minimax             4%     63%       -     67%     72%     41%    100%    100%    100%    100%
+reactor             0%     10%     33%       -     73%    100%     84%     97%    100%     99%
+tactician           1%      4%     28%     28%       -    100%     82%     98%     98%    100%
+turtle              0%      0%     60%      0%      0%       -     64%    100%    100%    100%
+mixer               0%      6%      1%     16%     18%     36%       -     51%     96%     86%
+zoner               1%      0%      0%      4%      2%      0%     50%       -    100%    100%
+rusher              1%      0%      0%      0%      2%      0%      5%      0%       -     75%
+random              0%      0%      0%      1%      1%      0%     14%      0%     26%       -
+
+比赛：平均 19.8 秒；KO 95%，判定 5%，平局 0%；有对冲的局 6%，每局大招 0.45 次；赢家血量曾低于 25% 的翻盘局 11%
+终结技：heavy 41%，light 21%，beam 15%，crush 10%，time 5%，blast 5%，clash 3%
+
+名局候选（按名局分）
+   12.9  glm vs reactor                 seed 1114136184  reactor ko         36.6s  血 0/18  对冲 2  领先易手 4  终结 clash
+   11.9  turtle vs mixer                seed 2935525631  turtle ko          39.3s  血 20/0  对冲 2  领先易手 7  终结 beam
+   11.8  glm vs reactor                 seed 3513177085  reactor ko         28.5s  血 0/60  对冲 2  领先易手 3  终结 clash
+   11.8  glm vs reactor                 seed 2936756886  reactor ko         46.2s  血 0/64  对冲 2  领先易手 3  终结 clash
+   11.2  reactor vs glm                 seed  993752244  glm ko             51.8s  血 0/40  对冲 1  领先易手 5  终结 clash
+   11.0  glm vs reactor                 seed  982174089  reactor ko         33.2s  血 0/32  对冲 2  领先易手 1  终结 clash
+   11.0  reactor vs glm                 seed 1030018715  reactor ko         33.2s  血 6/0  对冲 3  领先易手 1  终结 clash
+   10.8  mixer vs turtle                seed 4146781182  mixer ko           44.6s  血 100/0  对冲 2  领先易手 2  终结 clash
+   10.7  turtle vs mixer                seed  486448267  turtle ko          40.2s  血 40/0  对冲 2  领先易手 5  终结 light
+   10.7  turtle vs mixer                seed  158657942  turtle ko          48.8s  血 40/0  对冲 2  领先易手 5  终结 light
+   10.6  reactor vs glm                 seed 1716473004  reactor ko         34.2s  血 90/0  对冲 1  领先易手 6  终结 clash
+   10.4  reactor vs glm                 seed  176010499  glm ko             31.3s  血 0/110  对冲 1  领先易手 5  终结 clash
+
+9000 matches in 2.4 s on 11 workers -> out/league_trial2_mixed.json

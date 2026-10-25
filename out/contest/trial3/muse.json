@@ -1,0 +1,41 @@
+{
+  "id": "muse",
+  "name": "Muse Spark 1.3",
+  "provider": "openai-style",
+  "model": "meta/muse-spark-1.3",
+  "settings": {
+    "reasoning": {
+      "effort": "medium"
+    }
+  },
+  "maxTokens": 100000,
+  "started": "2026-10-24T20:55:11.522Z",
+  "tries": [
+    {
+      "n": 1,
+      "servedBy": "meta/muse-spark-1.3",
+      "stop": "stop",
+      "seconds": 149,
+      "usage": {
+        "input": 12018,
+        "output": 20131,
+        "reasoning": 17839
+      },
+      "costUSD": 0.1
+    }
+  ],
+  "servedBy": "meta/muse-spark-1.3",
+  "stop": "stop",
+  "line": "以静制动，一击必杀。",
+  "attempt": 1,
+  "warmup": {
+    "games": 28,
+    "wins": 27,
+    "errors": 0,
+    "forfeits": 0,
+    "maxCallMs": 0.3,
+    "avgCallUs": 4
+  },
+  "seconds": 149,
+  "costUSD": 0.1
+}

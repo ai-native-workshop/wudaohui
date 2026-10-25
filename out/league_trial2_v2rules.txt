@@ -1,0 +1,35 @@
+排名  选手            等级分  胜-负-平          胜率   KO胜  判定胜  犯规负  错误/调用   平均思考
+ 1    qwen             1963   1902-96-2         95%   1542     360       0    0/290808   3.3 µs
+ 2    minimax          1570   1064-936-0        53%    840     224       0    0/335686   3.4 µs
+ 3    glm               967   32-1966-2          2%      0      32       0    0/223240   4.7 µs
+
+招式占比（发出的招）                                            |  时间占比（可行动时）
+                    light    heavy    blast     beamdash_forwarddash_back  |    guard  charge forward    back    idle   破防  闪避
+qwen                  73%      26%       1%       0%       1%       0%  |      31%      0%     60%      9%      0%    4.4   0.0  <- 一招过半
+minimax               80%       8%       0%       0%      11%       0%  |      36%     12%     36%     14%      2%    0.7   7.6  <- 一招过半
+glm                   77%       5%       3%       0%       5%      10%  |      29%      4%     56%      8%      5%    0.2   0.2  <- 一招过半
+
+对位胜率（行对列）
+                  qwen minimax     glm
+qwen                 -     93%     98%
+minimax             7%       -     99%
+glm                 2%      1%       -
+
+比赛：平均 34.5 秒；KO 79%，判定 21%，平局 0%；有对冲的局 0%，每局大招 0.01 次；赢家血量曾低于 25% 的翻盘局 3%
+终结技：heavy 41%，light 30%，time 21%，crush 8%，blast 1%，beam 0%
+
+名局候选（按名局分）
+    8.0  qwen vs minimax                seed 2004953450  qwen ko            39.1s  血 52/0  对冲 0  领先易手 4  终结 heavy
+    7.8  minimax vs glm                 seed  732601863  glm time           60.0s  血 19/36  对冲 0  领先易手 4  终结 time
+    7.7  minimax vs qwen                seed   31375092  minimax ko         31.7s  血 30/0  对冲 0  领先易手 3  终结 heavy
+    7.5  qwen vs minimax                seed 3914940284  minimax ko         31.4s  血 0/42  对冲 0  领先易手 3  终结 light
+    7.4  minimax vs qwen                seed  965592891  minimax ko         25.0s  血 2/0  对冲 0  领先易手 2  终结 light
+    7.3  minimax vs qwen                seed 3939595640  minimax ko         34.0s  血 44/0  对冲 0  领先易手 1  终结 beam
+    7.3  minimax vs qwen                seed  108997611  minimax ko         21.6s  血 16/0  对冲 0  领先易手 2  终结 light
+    7.2  glm vs minimax                 seed 3033821871  minimax time       60.0s  血 8/29  对冲 0  领先易手 3  终结 time
+    7.1  qwen vs minimax                seed 1353789315  minimax time       60.0s  血 28/94  对冲 0  领先易手 3  终结 time
+    6.9  minimax vs qwen                seed 3475439326  qwen time          60.0s  血 16/52  对冲 0  领先易手 2  终结 time
+    6.8  minimax vs qwen                seed 3597051638  minimax ko         30.2s  血 2/0  对冲 0  领先易手 1  终结 heavy
+    6.8  qwen vs minimax                seed 4014463292  minimax ko         31.5s  血 0/2  对冲 0  领先易手 1  终结 light
+
+3000 matches in 1.2 s on 11 workers -> out/league_trial2_v2rules.json

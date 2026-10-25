@@ -1,0 +1,42 @@
+{
+  "id": "deepseek",
+  "name": "DeepSeek V4 Pro",
+  "provider": "openai-style",
+  "model": "deepseek/deepseek-v4-pro-0813",
+  "settings": {
+    "reasoning": {
+      "effort": "high"
+    }
+  },
+  "maxTokens": 128000,
+  "started": "2026-10-24T21:22:20.933Z",
+  "tries": [
+    {
+      "n": 1,
+      "servedBy": "deepseek/deepseek-v4-pro-0813",
+      "stop": "stop",
+      "seconds": 439,
+      "usage": {
+        "input": 12484,
+        "output": 29418,
+        "reasoning": 27383,
+        "costUSD": 0.0291522
+      },
+      "costUSD": 0.029
+    }
+  ],
+  "servedBy": "deepseek/deepseek-v4-pro-0813",
+  "stop": "stop",
+  "line": "以拳会友，败者贴地。",
+  "attempt": 1,
+  "warmup": {
+    "games": 28,
+    "wins": 21,
+    "errors": 0,
+    "forfeits": 0,
+    "maxCallMs": 0.1,
+    "avgCallUs": 3
+  },
+  "seconds": 439,
+  "costUSD": 0.03
+}

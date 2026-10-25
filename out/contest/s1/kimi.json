@@ -1,0 +1,42 @@
+{
+  "id": "kimi",
+  "name": "Kimi K3.1 Pro",
+  "provider": "openai-style",
+  "model": "moonshotai/kimi-k3.1-pro",
+  "settings": {
+    "reasoning": {
+      "effort": "high"
+    }
+  },
+  "maxTokens": 128000,
+  "started": "2026-10-24T21:22:20.933Z",
+  "tries": [
+    {
+      "n": 1,
+      "servedBy": "moonshotai/kimi-k3.1-pro",
+      "stop": "stop",
+      "seconds": 541,
+      "usage": {
+        "input": 11983,
+        "output": 22056,
+        "reasoning": 20098,
+        "costUSD": 0.244526
+      },
+      "costUSD": 0.245
+    }
+  ],
+  "servedBy": "moonshotai/kimi-k3.1-pro",
+  "stop": "stop",
+  "line": "先守其心，再破其势。",
+  "attempt": 1,
+  "warmup": {
+    "games": 28,
+    "wins": 28,
+    "errors": 0,
+    "forfeits": 0,
+    "maxCallMs": 1.1,
+    "avgCallUs": 4
+  },
+  "seconds": 542,
+  "costUSD": 0.25
+}

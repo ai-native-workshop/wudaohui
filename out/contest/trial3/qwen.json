@@ -1,0 +1,41 @@
+{
+  "id": "qwen",
+  "name": "Qwen 3.8 Max",
+  "provider": "openai-style",
+  "model": "qwen/qwen3.8-max-0902",
+  "settings": {
+    "reasoning": {
+      "effort": "medium"
+    }
+  },
+  "maxTokens": 100000,
+  "started": "2026-10-24T20:55:11.495Z",
+  "tries": [
+    {
+      "n": 1,
+      "servedBy": "qwen/qwen3.8-max-0902",
+      "stop": "stop",
+      "seconds": 382,
+      "usage": {
+        "input": 12681,
+        "output": 18312,
+        "reasoning": 16627
+      },
+      "costUSD": 0.14
+    }
+  ],
+  "servedBy": "qwen/qwen3.8-max-0902",
+  "stop": "stop",
+  "line": "拳出如风，不破不休。",
+  "attempt": 1,
+  "warmup": {
+    "games": 28,
+    "wins": 15,
+    "errors": 0,
+    "forfeits": 0,
+    "maxCallMs": 0.3,
+    "avgCallUs": 4
+  },
+  "seconds": 382,
+  "costUSD": 0.14
+}

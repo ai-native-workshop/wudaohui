@@ -1,0 +1,22 @@
+{
+  "id": "glm",
+  "name": "GLM-5.3",
+  "provider": "openai-style",
+  "model": "z-ai/glm-5.3",
+  "settings": {
+    "reasoning": {
+      "effort": "high"
+    }
+  },
+  "started": "2026-10-24T19:52:00.842Z",
+  "servedBy": "z-ai/glm-5.3",
+  "stop": "length",
+  "seconds": 554,
+  "usage": {
+    "input": 11246,
+    "output": 64000
+  },
+  "costUSD": 0.1,
+  "line": null,
+  "error": "no code block in the reply"
+}

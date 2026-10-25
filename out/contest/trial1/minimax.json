@@ -1,0 +1,22 @@
+{
+  "id": "minimax",
+  "name": "MiniMax M3.1 Flash",
+  "provider": "openai-style",
+  "model": "minimax/minimax-m3.1-flash",
+  "settings": {
+    "reasoning": {
+      "effort": "high"
+    }
+  },
+  "started": "2026-10-24T19:52:00.842Z",
+  "servedBy": "minimax/minimax-m3.1-flash",
+  "stop": "length",
+  "seconds": 361,
+  "usage": {
+    "input": 11235,
+    "output": 64000
+  },
+  "costUSD": 0.04,
+  "line": null,
+  "error": "no code block in the reply"
+}

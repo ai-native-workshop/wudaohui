@@ -1,0 +1,41 @@
+{
+  "id": "glm",
+  "name": "GLM-5.3",
+  "provider": "openai-style",
+  "model": "z-ai/glm-5.3",
+  "settings": {
+    "reasoning": {
+      "effort": "medium"
+    }
+  },
+  "maxTokens": 100000,
+  "started": "2026-10-24T20:55:11.521Z",
+  "tries": [
+    {
+      "n": 1,
+      "servedBy": "z-ai/glm-5.3",
+      "stop": "stop",
+      "seconds": 86,
+      "usage": {
+        "input": 12054,
+        "output": 9814,
+        "reasoning": 8352
+      },
+      "costUSD": 0.02
+    }
+  ],
+  "servedBy": "z-ai/glm-5.3",
+  "stop": "stop",
+  "line": "见招拆招，以波会友，点到为止。",
+  "attempt": 1,
+  "warmup": {
+    "games": 28,
+    "wins": 11,
+    "errors": 0,
+    "forfeits": 0,
+    "maxCallMs": 0.2,
+    "avgCallUs": 3
+  },
+  "seconds": 86,
+  "costUSD": 0.02
+}

@@ -1,0 +1,65 @@
+{
+  "id": "claude",
+  "name": "Claude Opus 5.5",
+  "provider": "openai-style",
+  "model": "anthropic/claude-opus-5.5",
+  "settings": {
+    "reasoning": {
+      "effort": "high"
+    }
+  },
+  "maxTokens": 128000,
+  "started": "2026-10-24T21:22:20.907Z",
+  "tries": [
+    {
+      "n": 1,
+      "servedBy": "anthropic/claude-opus-5.5",
+      "stop": "content_filter",
+      "seconds": 228,
+      "usage": {
+        "input": 17030,
+        "output": 20633,
+        "reasoning": 20633,
+        "costUSD": 0.48078
+      },
+      "costUSD": 0.481,
+      "error": "no code block in the reply (stop: content_filter)"
+    },
+    {
+      "n": 2,
+      "servedBy": "anthropic/claude-opus-5.5",
+      "stop": "content_filter",
+      "seconds": 535,
+      "usage": {
+        "input": 17030,
+        "output": 48861,
+        "reasoning": 48861,
+        "costUSD": 1.04534
+      },
+      "costUSD": 1.045,
+      "error": "no code block in the reply (stop: content_filter)"
+    },
+    {
+      "n": 3,
+      "route": "claude.ai 网页版（订阅）",
+      "settings": "effort High；API 两次被 content_filter 拦截后由用户在网页版提交",
+      "seconds": 1171,
+      "reply": "claude.reply3.md"
+    }
+  ],
+  "seconds": 763,
+  "costUSD": 1.53,
+  "servedBy": "claude.ai 网页版（订阅）",
+  "stop": "manual",
+  "line": "你的每一帧，我都看得见。",
+  "attempt": 3,
+  "finished": "2026-10-24T22:31:12.537Z",
+  "warmup": {
+    "games": 28,
+    "wins": 28,
+    "errors": 0,
+    "forfeits": 0,
+    "maxCallMs": 0.3,
+    "avgCallUs": 8
+  }
+}

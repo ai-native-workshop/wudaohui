@@ -1,0 +1,30 @@
+{
+  "id": "minimax",
+  "name": "MiniMax M3.1 Flash",
+  "provider": "openai-style",
+  "model": "minimax/minimax-m3.1-flash",
+  "settings": {
+    "reasoning": {
+      "effort": "medium"
+    }
+  },
+  "started": "2026-10-24T20:21:21.813Z",
+  "servedBy": "minimax/minimax-m3.1-flash",
+  "stop": "stop",
+  "seconds": 410,
+  "usage": {
+    "input": 11222,
+    "output": 55428,
+    "reasoning": 0
+  },
+  "costUSD": 0.03,
+  "line": "轻拳连段，重击破防！",
+  "warmup": {
+    "games": 28,
+    "wins": 25,
+    "errors": 0,
+    "forfeits": 0,
+    "maxCallMs": 0.1,
+    "avgCallUs": 3
+  }
+}

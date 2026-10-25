@@ -1,0 +1,42 @@
+{
+  "id": "gpt",
+  "name": "GPT-6 Astra",
+  "provider": "openai-style",
+  "model": "openai/gpt-6-astra",
+  "settings": {
+    "reasoning": {
+      "effort": "high"
+    }
+  },
+  "maxTokens": 128000,
+  "started": "2026-10-24T21:22:20.932Z",
+  "tries": [
+    {
+      "n": 1,
+      "servedBy": "openai/gpt-6-astra",
+      "stop": "stop",
+      "seconds": 636,
+      "usage": {
+        "input": 12333,
+        "output": 26623,
+        "reasoning": 17407,
+        "costUSD": 1.485305
+      },
+      "costUSD": 1.485
+    }
+  ],
+  "servedBy": "openai/gpt-6-astra",
+  "stop": "stop",
+  "line": "看破一帧，胜过千拳。",
+  "attempt": 1,
+  "warmup": {
+    "games": 28,
+    "wins": 28,
+    "errors": 0,
+    "forfeits": 0,
+    "maxCallMs": 5.7,
+    "avgCallUs": 1088
+  },
+  "seconds": 642,
+  "costUSD": 1.49
+}

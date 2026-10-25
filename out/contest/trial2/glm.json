@@ -1,0 +1,30 @@
+{
+  "id": "glm",
+  "name": "GLM-5.3",
+  "provider": "openai-style",
+  "model": "z-ai/glm-5.3",
+  "settings": {
+    "reasoning": {
+      "effort": "medium"
+    }
+  },
+  "started": "2026-10-24T20:21:21.813Z",
+  "servedBy": "z-ai/glm-5.3",
+  "stop": "stop",
+  "seconds": 144,
+  "usage": {
+    "input": 11246,
+    "output": 19160,
+    "reasoning": 17378
+  },
+  "costUSD": 0.03,
+  "line": "格挡破得，气功穿得，武道不破。",
+  "warmup": {
+    "games": 28,
+    "wins": 28,
+    "errors": 0,
+    "forfeits": 0,
+    "maxCallMs": 0.1,
+    "avgCallUs": 4
+  }
+}
