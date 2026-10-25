@@ -45,6 +45,7 @@ node arena/finalfilm.mjs                               # 决赛每局渲染成 o
 node arena/episode.mjs --peek                          # 每张卡片一帧，拼成 out/ep1/check/sheet.jpg 先看排版
 node arena/episode.mjs                                 # 拼第一集（配乐在最后一步混进去）-> out/ep1/ep1.mp4 和 ep1_720p.mp4
 node arena/episode.mjs --cover                         # 封面 -> out/ep1/cover.jpg（16:9）和 cover_16x10.jpg（B 站）
+node arena/publish.mjs                                 # 以组织机器人的身份推到 GitHub（第一次会建仓库、开 Pages），公开记录里不出现个人账号
 node arena/aftermatch.mjs --dry                        # 先看要发给 6 家的赛后感言提示词；去掉 --dry 就真发
 node anime/still.mjs sheet.html out/film/check/sheet.png 2400 1500       # 定妆表
 node arena/brief.mjs                                   # 生成规则书 out/brief.md
