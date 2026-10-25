@@ -9,8 +9,11 @@ export const pad = {
   take(b, tick) { const i = this.presses.findIndex(p => p.b === b && tick - p.at <= 8); if (i < 0) return false; this.presses.splice(i, 1); return true; },
   intent(v, tick) {
     this.presses = this.presses.filter(p => tick - p.at <= 8);
+    // the engine turns a fighter to the opponent just before it acts, so 'toward' comes from where the opponent stands, not from the
+    // facing in the view (that can still be the old one right after a dash through): right is always right on the screen
     const left = this.down.has('left'), right = this.down.has('right');
-    const toward = v.me.facing > 0 ? right : left, away = v.me.facing > 0 ? left : right;
+    const oppRight = v.opp.x !== v.me.x ? v.opp.x > v.me.x : v.me.facing > 0;
+    const toward = oppRight ? right : left, away = oppRight ? left : right;
     if (v.clash) return this.down.has('light') ? 'push' : 'idle';
     const move = () => this.take('light', tick) ? 'light' : this.take('heavy', tick) ? 'heavy' : this.take('blast', tick) ? 'blast' : this.take('beam', tick) ? 'beam' : null;
     if (v.me.canCancel) return move() || 'none';

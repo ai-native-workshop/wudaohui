@@ -171,7 +171,8 @@ const keys = {
   intent(v, tick) {
     this.presses = this.presses.filter(p => tick - p.at <= 8);
     const left = this.down.has('KeyA') || this.down.has('ArrowLeft'), right = this.down.has('KeyD') || this.down.has('ArrowRight');
-    const toward = v.me.facing > 0 ? right : left, away = v.me.facing > 0 ? left : right;
+    const oppRight = v.opp.x !== v.me.x ? v.opp.x > v.me.x : v.me.facing > 0;   // where the opponent stands: the facing can be stale right after a cross-up
+    const toward = oppRight ? right : left, away = oppRight ? left : right;
     if (v.clash) return this.down.has('KeyJ') ? 'push' : 'idle';
     const move = () => this.take('KeyJ', tick) ? 'light' : this.take('KeyK', tick) ? 'heavy' : this.take('KeyL', tick) ? 'blast' : this.take('KeyI', tick) ? 'beam' : null;
     if (v.me.canCancel) return move() || 'none';

@@ -322,6 +322,20 @@ const CARDS = {
       plain(d.sub, W / 2, H * 0.34, 38, '#ffffff', { alpha: ease((t - 0.9) / 0.6), weight: 700 });
       if (t > 1.4) bubble(d.line, W * 0.6, H * 0.45, 54, p[1], ease((t - 1.4) / 0.3));
     } },
+  challenge: { secs: 6.5, sfx: d => [[0.1, 'boom_2', 0.6], ...d.lineup.map((p, i) => [0.5 + i * 0.12, 'punch_light_' + (i % 5), 0.45]), [2.2, 'gong_1', 0.7]],
+    draw(t, d) {
+      bg(t, '#2a1a3a');
+      text(d.title, W / 2, H * 0.15, 104, '#fff6d0', { glow: '#ffb15c', alpha: ease(t / 0.4) });
+      text(d.sub, W / 2, H * 0.27, 50, '#ffe36b', { alpha: ease((t - 0.5) / 0.4), weight: 800 });
+      const feet = H * 0.78;
+      d.lineup.forEach((p, i) => {                                            // the six, guard up, each with how it did in the league
+        const a = ease((t - 0.5 - i * 0.12) / 0.4), x = W / 2 + (i - 2.5) * 290, cc = col(p.id);
+        aura(x, feet, 260, cc, a * 0.7, t + i); fighter(p.id, x, feet + (1 - a) * 60, 1.35, 'guard', { alpha: a, tick: t * 60, ki: 80, flip: i >= 3 });
+        text(p.short, x, feet + 44, 38, cc, { alpha: a });
+        plain(`联赛胜率 ${p.win}%`, x, feet + 84, 24, '#ffffffcc', { alpha: a, weight: 700 });
+      });
+      text(d.foot, W / 2, H * 0.4, 44, '#ffffff', { alpha: ease((t - 2.2) / 0.5), weight: 800, glow: '#7fd4ff' });
+    } },
   vote: { secs: 8, sfx: d => [...d.options.map((o, i) => [0.6 + i * 0.4, 'punch_light_' + (i + 1), 0.7]), [2.4, 'gong_1', 0.85]],
     draw(t, d) {
       bg(t);
