@@ -4,7 +4,7 @@
 //
 //   node arena/episode.mjs           -> out/ep1/ep1.mp4 (1080p) and out/ep1/ep1_720p.mp4; --variant=douyin -> ep1_douyin.mp4 (no off-site link)
 //   node arena/episode.mjs --peek    a still of every card -> out/ep1/check/ (and sheet.jpg); --peek=title only the title card
-//   node arena/episode.mjs --cover   the cover -> out/ep1/cover.jpg (16:9) and cover_16x10.jpg (B 站)
+//   node arena/episode.mjs --cover   the covers -> out/ep1/covers/ (16:9, 4:3, 16:10 for B 站, 9:16 and its middle 3:4; each also _clean)
 import puppeteer from 'puppeteer-core';
 import http from 'node:http';
 import { createHash } from 'node:crypto';
@@ -148,15 +148,24 @@ async function setCard(p, piece, i) {
   return p.evaluate((type, d) => window.__card(type, d), piece.seg.card, data);
 }
 
-if (args.cover) {                                                           // the cover: the cold open's last frame (both beams meeting), big words
+if (args.cover) {                                                           // the covers, in the ratios the platforms crop to, each with and without words
   const fi = pieces.findIndex(x => x.seg.card === 'freeze'), src = pieces[fi - 1].out;
   if (!existsSync(src)) { console.error('render the episode first'); process.exit(1); }
-  const p = await cardsPage(), img = lastFrame(src, join(dir, '.cover_bg.jpg'));
-  await p.evaluate(d => window.__card('cover', d), { img, big: `${league.results.length} 局`, line: '6 个 AI 各写一个格斗程序', small: '谁是天下第一？' });
-  save(join(dir, 'cover.jpg'), await p.evaluate(() => window.__drawCard(0)));
+  const p = await cardsPage(), img = lastFrame(src, join(dir, '.cover_bg.jpg')), cdir = join(dir, 'covers'); mkdirSync(cdir, { recursive: true });
+  const words = { head: 'AI 武道会 · 第 1 集', big: `${league.results.length} 局`, line: '6 个 AI 各写一个格斗程序', small: '谁是天下第一？' };
+  const shot = async (type, size, name, extra = {}) => {
+    for (const clean of [false, true]) {
+      await p.evaluate((t, d) => window.__card(t, d), type, { ...words, ...extra, size, clean });
+      save(join(cdir, `${name}${clean ? '_clean' : ''}.jpg`), await p.evaluate(() => window.__drawCard(0)));
+    }
+  };
+  await shot('cover', [1920, 1080], 'cover_16x9', { img });          // the cold open's last frame: both beams meeting
+  await shot('cover', [1440, 1080], 'cover_4x3', { img });
+  await shot('cover', [1728, 1080], 'cover_16x10', { img });         // B 站
+  await shot('coverTall', [1080, 1920], 'cover_9x16', { pair: ['gpt', 'gemini'], names: ORDER.map(id => ({ id, short: SHORT[id] })) });
   await browser.close(); server.close();
-  ffmpeg(['-i', join(dir, 'cover.jpg'), '-vf', 'crop=1728:1080', '-q:v', '2', join(dir, 'cover_16x10.jpg')]);   // B 站封面是 16:10
-  console.log(`-> ${dir}/cover.jpg (16:9), cover_16x10.jpg`); process.exit(0);
+  for (const clean of ['', '_clean']) ffmpeg(['-i', join(cdir, `cover_9x16${clean}.jpg`), '-vf', 'crop=1080:1440:0:240', '-q:v', '2', join(cdir, `cover_3x4${clean}.jpg`)]);   // its middle
+  console.log(`-> ${cdir}: 16x9, 4x3, 16x10, 9x16, 3x4 (and _clean)`); process.exit(0);
 }
 if (args.peek) {                                                            // one still per card, at 85% of its length
   const p = await cardsPage(), check = join(dir, 'check'); rmSync(check, { recursive: true, force: true }); mkdirSync(check, { recursive: true });

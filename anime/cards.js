@@ -7,7 +7,8 @@ import { drawStick } from './stick.js';
 import { RULES } from '../src/rules.js';
 import { toWav } from '../viewer/audio.js';
 
-const c = document.getElementById('c'), g = c.getContext('2d'), W = c.width, H = c.height, FPS = 24;
+const c = document.getElementById('c'), g = c.getContext('2d'), FPS = 24;
+let W = c.width, H = c.height;                                              // a card may ask for another size (the covers)
 const ease = k => (k <= 0 ? 0 : k >= 1 ? 1 : 1 - Math.pow(1 - k, 3));
 const FONT = '"PingFang SC", "Hiragino Sans GB", sans-serif';
 const col = id => castOf(id).palette[1];
@@ -280,14 +281,44 @@ const CARDS = {
     } },
   cover: { secs: 1,
     draw(t, d) {
-      g.drawImage(card.img, 0, 0, W, H);
+      const k = Math.max(W / card.img.width, H / card.img.height), iw = card.img.width * k, ih = card.img.height * k;   // fill, cropping the sides
+      g.drawImage(card.img, (W - iw) / 2, (H - ih) / 2, iw, ih);
       const v = g.createRadialGradient(W / 2, H / 2, H * 0.3, W / 2, H / 2, H * 1.0); v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,0.6)');
       g.fillStyle = v; g.fillRect(0, 0, W, H);
-      const band = g.createLinearGradient(0, 0, 0, H * 0.45); band.addColorStop(0, 'rgba(4,8,26,0.95)'); band.addColorStop(0.36, 'rgba(4,8,26,0.85)'); band.addColorStop(1, 'rgba(4,8,26,0)');   // over the HUD
+      const band = g.createLinearGradient(0, 0, 0, H * 0.45); band.addColorStop(0, 'rgba(4,8,26,0.98)'); band.addColorStop(0.36, 'rgba(4,8,26,0.92)'); band.addColorStop(1, 'rgba(4,8,26,0)');   // over the HUD
       g.fillStyle = band; g.fillRect(0, 0, W, H * 0.45);
-      text(d.big, W / 2, H * 0.22, 250, '#ffe36b', { glow: '#ff9a3c' });
-      text(d.line, W / 2, H * 0.8, 84, '#ffffff', { glow: '#7fd4ff' });
+      if (d.clean) return;
+      plain(d.head, 40, 52, 34, '#ffffffcc', { align: 'left', weight: 700 });
+      text(d.big, W / 2, H * 0.22, Math.min(250, W * 0.16), '#ffe36b', { glow: '#ff9a3c' });
+      text(d.line, W / 2, H * 0.8, Math.min(84, W * 0.056), '#ffffff', { glow: '#7fd4ff' });
       text(d.small, W / 2, H * 0.91, 48, '#ffe36b', { weight: 800 });
+    } },
+  // the upright cover, drawn: two of them, beams meeting between them, under the anime's speed lines. What matters sits in the middle
+  // 3:4 (a profile grid crops to it); the name of the show above and the six names below are extra
+  coverTall: { secs: 1,
+    draw(t, d) {
+      bg(2.3, '#2a1a3a');
+      const cy = H * 0.6, cx = W / 2;
+      g.save(); g.globalCompositeOperation = 'lighter';                         // speed lines into the clash
+      for (let i = 0; i < 64; i++) {
+        const a = (i / 64) * Math.PI * 2 + Math.sin(i * 12.9898) * 0.04, r0 = W * (0.32 + 0.1 * Math.abs(Math.sin(i * 78.233))), r1 = W * 1.6, w = 0.006 + 0.01 * Math.abs(Math.sin(i * 3.7));
+        g.globalAlpha = 0.1 + 0.12 * Math.abs(Math.sin(i * 1.3)); g.fillStyle = '#ffffff'; g.beginPath();
+        g.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0); g.lineTo(cx + Math.cos(a - w) * r1, cy + Math.sin(a - w) * r1); g.lineTo(cx + Math.cos(a + w) * r1, cy + Math.sin(a + w) * r1); g.fill();
+      }
+      g.restore();
+      const s = W / 400, feet = cy + 118 * s, [p, q] = d.pair;
+      aura(W * 0.2, feet, 300 * s, col(p), 1, 1); aura(W * 0.8, feet, 300 * s, col(q), 1, 2);
+      const h1 = fighter(p, W * 0.2, feet, s, 'clash', { ki: 100 }), h2 = fighter(q, W * 0.8, feet, s, 'clash', { flip: true, ki: 100 });
+      const y = (h1.front[1] + h2.front[1]) / 2;
+      beamLine(h1.front[0] + 6, y, cx, 34 * s / 2, col(p)); beamLine(h2.front[0] - 6, y, cx, 34 * s / 2, col(q));
+      glowBall(cx, y, 120 * s / 2, '#ffffff', 1); burst(cx, y, 52 * s / 2, '#fff6c8', 0.7, 12); ring(cx, y, 110 * s / 2, '#ffffff', 0.5);
+      if (d.clean) return;
+      plain(d.head, cx, H * 0.075, W * 0.045, '#ffffffcc', { weight: 700 });
+      text(d.big, cx, H * 0.24, W * 0.21, '#ffe36b', { glow: '#ff9a3c' });
+      text(d.line, cx, H * 0.335, W * 0.06, '#ffffff', { glow: '#7fd4ff' });
+      text(d.small, cx, H * 0.84, W * 0.065, '#ffe36b', { weight: 800 });
+      const names = d.names, gap = W / (names.length + 0.5);
+      names.forEach((n, i) => text(n.short, gap * (i + 0.75), H * 0.94, W * 0.034, col(n.id), { weight: 800 }));
     } },
   inter: { secs: 2.2, sfx: d => [[0, d.vs ? 'bigboom_1' : 'boom_3', d.vs ? 0.55 : 1]],
     draw(t, d) {
@@ -351,6 +382,8 @@ const CARDS = {
 };
 
 window.__card = async (type, data) => {
+  if (data.size) { [c.width, c.height] = data.size; } else if (c.width !== 1920 || c.height !== 1080) { c.width = 1920; c.height = 1080; }
+  W = c.width; H = c.height;
   card = { def: CARDS[type], data, frames: Math.round((data.secs || CARDS[type].secs) * FPS) };   // data.secs: this card held longer
   if (data.img) { card.img = new Image(); card.img.src = data.img; await card.img.decode(); }
   return card.frames;
