@@ -2,7 +2,7 @@
 // and the vote. Cards are drawn by anime/cards.html, match clips (the final's games too) by arena/film.mjs.
 // Every piece is kept under a hash of what made it (its words, the code that draws it), so a change re-renders only what it touches.
 //
-//   node arena/episode.mjs           -> out/ep1/ep1.mp4 (1080p) and out/ep1/ep1_720p.mp4; --variant=douyin -> ep1_douyin.mp4 (no off-site link)
+//   node arena/episode.mjs           -> out/ep1/ep1.mp4 (1080p, the same cut for B 站 and 抖音) and out/ep1/ep1_720p.mp4
 //   node arena/episode.mjs --peek    a still of every card -> out/ep1/check/ (and sheet.jpg); --peek=title only the title card
 //   node arena/episode.mjs --cover   the covers -> out/ep1/covers/ (16:9, 4:3, 16:10 for B 站, 9:16 and its middle 3:4; each also _clean)
 import puppeteer from 'puppeteer-core';
@@ -18,7 +18,6 @@ const args = Object.fromEntries(process.argv.slice(2).map(a => { const m = /^--(
 const dir = join(root, 'out/ep1'), FPS = 24;
 mkdirSync(dir, { recursive: true });
 const read = p => readFileSync(join(root, p), 'utf8'), json = p => JSON.parse(read(p));
-const VARIANT = args.variant || 'bilibili';                                // douyin: no off-site link on screen, and its own file
 
 // ---- the numbers the cards quote: the league table, who beats whom, each contestant's receipt
 const league = json('out/league_s1.json'), bots = league.bots.map(b => b.name);
@@ -98,9 +97,9 @@ const PLAN = [
       const champ = n === final.champion.split('/').pop(), runner = !champ && [final.a, final.b].some(f => f.endsWith(`/${n}`));
       return { id: n, rank: champ ? '冠军' : runner ? '亚军' : String(ranked.indexOf(n) + 1), champion: champ, name: SHORT[n], before: json(`out/contest/s1/${n}.json`).line, after: json('out/contest/s1/aftermatch.json').replies[n].line };
     }) } },
-  { music: 'opening', card: 'challenge', data: {                                                                   // the playable page: where depends on the platform
+  { music: 'opening', card: 'challenge', data: {                                                                   // the playable page: its link goes in a comment, never the description (B 站 counts a link there as promotion)
     title: '你能打赢几个？', sub: '联赛垫底的 DeepSeek，你也不一定打得过',
-    foot: VARIANT === 'douyin' ? '网页版：亲手挑战这 6 个 AI 写的程序，入口见评论区' : '网页版：打开就能挑战这 6 个 AI 写的程序 · 链接在简介第一行',
+    foot: '网页版：亲手挑战这 6 个 AI 写的程序，入口见评论区',
     lineup: ORDER.map(id => ({ id, short: SHORT[id], win: Math.round((100 * rec[id].w) / (rec[id].w + rec[id].l + rec[id].d)) })) } },
   { card: 'vote', data: { title: '第 2 集你想看哪个？', options: [['A', 'AI 看完自己的录像，改代码再打'], ['B', '6 个 AI 同台大乱斗'], ['C', '6 个 AI 一起闯名场面 boss 关']], foot: '评论区打 A / B / C，再说说你打赢了谁' } },
 ];
@@ -203,7 +202,7 @@ for (const [i, piece] of pieces.entries()) {
 }
 if (browser) { await browser.close(); server.close(); }
 const keep = new Set(pieces.map(p => p.out));                               // pieces from earlier versions of the plan or the code
-if (VARIANT === 'bilibili') for (const f of readdirSync(dir)) if (/^(\d\d_\w+_[0-9a-f]{8}\.mp4|\.last_[0-9a-f]{8}\.jpg)$/.test(f) && !keep.has(join(dir, f)) && !pieces.some(p => p.key && f === `.last_${p.key}.jpg`)) rmSync(join(dir, f));
+for (const f of readdirSync(dir)) if (/^(\d\d_\w+_[0-9a-f]{8}\.mp4|\.last_[0-9a-f]{8}\.jpg)$/.test(f) && !keep.has(join(dir, f)) && !pieces.some(p => p.key && f === `.last_${p.key}.jpg`)) rmSync(join(dir, f));
 
 // ---- the music: a stretch starts at a piece marked music: <track> and runs to the next mark or the end; nothing under the cold open.
 // Each track is set to `level` LUFS (the sound effects sit near -16), `duck` dB lower while a match clip plays, faded in and out, and
@@ -231,7 +230,7 @@ function mixMusic(input, output) {
 
 // join: every piece has the same encoding, so the concat demuxer copies them (sound effects only); then the music goes under them and
 // a 720p copy is made to send around
-const tag = VARIANT === 'douyin' ? '_douyin' : '', list = join(dir, '.list.txt'), joined = join(dir, '.joined.mp4'), master = join(dir, `ep1${tag}.mp4`), small = join(dir, `ep1${tag}_720p.mp4`);
+const list = join(dir, '.list.txt'), joined = join(dir, '.joined.mp4'), master = join(dir, 'ep1.mp4'), small = join(dir, 'ep1_720p.mp4');
 writeFileSync(list, pieces.map(p => `file '${p.out.replace(/'/g, "'\\''")}'`).join('\n') + '\n');
 ffmpeg(['-f', 'concat', '-safe', '0', '-i', list, '-c', 'copy', '-movflags', '+faststart', joined]);
 mixMusic(joined, master);
