@@ -4,7 +4,7 @@
 
 Models from six AI companies got the same rulebook, word for word, and each wrote a fighting program. The programs fought each other in pairs on the same 2D stage, thousands of games in all. Every game counts toward the results. The best few games are replayed frame by frame from their logs as anime-style videos for Bilibili.
 
-Episode 1 (in Chinese): [Bilibili BV1Z5HV6dEqk](https://www.bilibili.com/video/BV1Z5HV6dEqk)　·　Play in your browser: [ai-wudaohui.github.io/wudaohui](https://ai-wudaohui.github.io/wudaohui/)
+Episode 1 (in Chinese): [Bilibili BV1Z5HV6dEqk](https://www.bilibili.com/video/BV1Z5HV6dEqk)　·　Play in your browser: [ai-native-workshop.github.io/wudaohui](https://ai-native-workshop.github.io/wudaohui/)
 
 This repository has:
 - the arena engine;

@@ -4,7 +4,7 @@
 
 6 家大模型拿到一字不差的规则书，各写一个格斗程序，在同一个 2D 擂台上两两对打几千局。胜负按全部局数算；最精彩的几局按对局日志逐帧重演，做成日漫风的回放，发在 B 站。
 
-第一集正片：[B 站 BV1Z5HV6dEqk](https://www.bilibili.com/video/BV1Z5HV6dEqk)　·　网页可玩版：[ai-wudaohui.github.io/wudaohui](https://ai-wudaohui.github.io/wudaohui/)
+第一集正片：[B 站 BV1Z5HV6dEqk](https://www.bilibili.com/video/BV1Z5HV6dEqk)　·　网页可玩版：[ai-native-workshop.github.io/wudaohui](https://ai-native-workshop.github.io/wudaohui/)
 
 这个仓库里有：
 - 擂台引擎；
